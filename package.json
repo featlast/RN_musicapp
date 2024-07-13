@@ -10,6 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.1",
+    "axios": "^1.7.2",
+    "human-readable-numbers": "^0.9.5",
     "react": "18.2.0",
     "react-native": "0.74.3"
   },
