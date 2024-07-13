@@ -8,4 +8,3 @@ const ApiManager = axios.create({
 
 export default ApiManager;
 
-// import {API_URL, API_URL_DEV, API_URL_TESTING} from '@env';

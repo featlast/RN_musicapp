@@ -1,22 +1,3 @@
-// import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-// import { MusicMapper } from '../infrastructure/mappers/music.mapper';
-// import { Music } from '../core/models/music.model';
-// import { getTopTracks } from '../api/get-data-music';
-
-// export const useTopTracks = () => {
-//   return useQuery({
-//     queryKey: ['tracks'],
-//     queryFn: async (): Promise<Music[]> => {
-//       const response = await getTopTracks();
-//       return response.tracks.track.map(MusicMapper.fromMusicDBResolveToModels);
-//     },
-//   });
-// };
-
-
-
-// src/hooks/useTopTracks.ts
-// src/hooks/useTopTracks.ts
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { MusicMapper } from '../infrastructure/mappers/music.mapper';
 import { Music } from '../core/models/music.model';
