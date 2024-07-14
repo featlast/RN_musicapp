@@ -1,22 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import {useTopTracks} from '../../../hook/useTopTracks';
-import {FlashList, ListRenderItemInfo} from '@shopify/flash-list';
-import LoaderKit from 'react-native-loader-kit';
+import {FlashList} from '@shopify/flash-list';
 import TrackItem from './components/TrackItem';
 import {colors} from '../../../theme/colors';
+import Loader from '../../components/Loader';
 
 const HomeScreen: React.FC = () => {
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error} = useTopTracks();
 
-  if (isLoading)
-    return (
-      <LoaderKit
-        style={{width: 50, height: 50, alignSelf: 'center'}}
-        name={'BallPulseSync'}
-        color={'red'}
-      />
-    );
+  if (isLoading) return <Loader />;
   if (error) return <Text>Error: {error.message}</Text>;
 
   const loadMore = () => {
@@ -27,48 +20,16 @@ const HomeScreen: React.FC = () => {
 
   const renderFooter = () => {
     if (!hasNextPage) return null;
-    return (
-      <LoaderKit
-        style={{width: 50, height: 50, alignSelf: 'center'}}
-        name={'BallPulseSync'}
-        color={'red'}
-      />
-    );
-    // <ActivityIndicator style={{marginVertical: 20}} />;
+    return <Loader />;
   };
 
   const allTracks = data?.pages.flatMap(page => page.tracks) ?? [];
 
-  const ITEM_HEIGHT = 87;
-  //Render Item Optimize
-  // const overrideItemLayout = React.useCallback(
-  //   (
-  //     layout: {span?: number; size?: number},
-  //     item: Music,
-  //     index: number,
-  //     maxColumns: number,
-  //     extraData?: any,
-  //   ) => {
-  //     if (layout.size !== undefined) {
-  //       layout.size = ITEM_HEIGHT;
-  //     }
-  //   },
-  //   [data],
-  // );
-
-  // backgroundColor: colors.ui.disabled,
-
-  const colorList = [
-    {offset: '0%', color: '#231557', opacity: '1'},
-    {offset: '29%', color: '#44107A', opacity: '1'},
-    {offset: '67%', color: '#FF1361', opacity: '1'},
-    {offset: '100%', color: '#FFF800', opacity: '1'},
-  ];
   return (
     <View
       style={{
         flex: 1,
-        // backgroundColor: colors.ui.disabled,
+        backgroundColor: colors.ui.white,
       }}>
       <FlashList
         data={allTracks}
@@ -83,6 +44,5 @@ const HomeScreen: React.FC = () => {
     </View>
   );
 };
-// overrideItemLayout={overrideItemLayout}
 
 export default HomeScreen;

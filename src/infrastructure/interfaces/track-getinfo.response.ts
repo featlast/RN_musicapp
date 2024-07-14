@@ -1,4 +1,4 @@
-export interface GetInfoTracksResponse {
+export interface GetInfoTrackResponse {
   track: Track;
 }
 
@@ -31,7 +31,14 @@ export interface Attr {
 
 export interface Image {
   "#text": string;
-  size:    string;
+  size:    Size;
+}
+
+export enum Size {
+  Extralarge = "extralarge",
+  Large = "large",
+  Medium = "medium",
+  Small = "small",
 }
 
 export interface Artist {

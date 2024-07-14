@@ -1,10 +1,10 @@
 import {Text, View, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconMusic from 'react-native-vector-icons/SimpleLineIcons';
 import {type NavigationProp, useNavigation, useRoute} from '@react-navigation/native';
 
 import {colors} from '../../theme/colors';
 import {RootStackParams} from './MyStackNavigationScreens';
+import Icon, {Icons} from '../../presentation/components/IconComponent';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const CustomHeader: React.FC<{title: string}> = ({title}) => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -27,12 +27,9 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
           paddingLeft: 15,
         }}>
         {route.name !== 'Home' && (
-          <Icon
-            name="arrow-back-ios"
-            size={24}
-            color={colors.ui.quaternary}
-            onPress={() => navigation.goBack()}
-          />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon type={Icons.MaterialIcons} name="arrow-back-ios" />
+          </TouchableOpacity>
         )}
       </View>
       <View
@@ -44,6 +41,8 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
           style={{
             fontSize: 18,
             fontWeight: 'bold',
+            fontFamily: 'Poppins',
+            color: colors.ui.white,
           }}>
           {title}
         </Text>
@@ -54,12 +53,11 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
           alignItems: 'flex-end',
           paddingRight: 15,
         }}>
-        <IconMusic
-          name="playlist"
-          size={24}
-          color={colors.ui.quaternary}
-          onPress={() => navigation.navigate('Profile')}
-        />
+        {route.name !== 'Profile' && (
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Icon type={Icons.SimpleLineIcons} name="playlist" />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

@@ -10,5 +10,12 @@ export const colors = {
     alert: "#F27111",
     error: "#D0421B",
     success: "#85BF2B",
+    darkBlue:'#231557',
+    purple:'#44107A',
+    fucsia:'#FF1361',
+    greenYellow: '#FFF800',
   },}
+
+
+
 

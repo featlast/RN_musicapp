@@ -1,19 +1,21 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Music} from '../../../../core/models/music.model';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import format from 'human-format';
 import {colors} from '../../../../theme/colors';
 import {type NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParams} from '../../../../routes/stack/MyStackNavigationScreens';
+import Icon, {Icons} from '../../../components/IconComponent';
 
 const TrackItem = React.memo(({item}: {item: Music}) => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  const formatDuration = (duration: number) => {
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
+
+  function formatDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+    return `${minutes}:${formattedSeconds}`;
+  }
 
   const imageUrl = item.image[2]['#text'];
   return (
@@ -31,7 +33,7 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
           marginBottom: 8,
           alignSelf: 'center',
           borderRadius: 10,
-          shadowColor: '#000F', // Agrega una sombra
+          shadowColor: '#000F',
           shadowOffset: {
             width: 0,
             height: 2,
@@ -42,11 +44,12 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
           overflow: 'hidden',
         }}>
         <Icon
+          type={Icons.MaterialIcons}
           name="touch-app"
           size={15}
-          color={colors.ui.quaternary}
           style={{position: 'absolute', top: 10, left: 10}}
         />
+
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
             source={{uri: imageUrl}}
@@ -70,13 +73,12 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
               {item.artist.name}
             </Text>
           </View>
-          <Icon
-            name="favorite-outline"
-            size={26}
-            color={colors.ui.quaternary}
-            style={{position: 'absolute', right: 15, top: 8}}
-            onPress={() => console.log('object')}
-          />
+          <TouchableOpacity
+            onPress={() => console.log('Add Fav')}
+            style={{position: 'absolute', right: 15, top: 8}}>
+            <Icon type={Icons.MaterialIcons} name="favorite-outline" size={20} />
+          </TouchableOpacity>
+
           <View
             style={{
               flexDirection: 'row',
@@ -85,7 +87,7 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
               right: 15,
               bottom: 8,
             }}>
-            <Icon name="audiotrack" size={20} color={colors.ui.quaternary} />
+            <Icon type={Icons.MaterialIcons} name="audiotrack" size={20} />
             <Text
               style={{
                 fontWeight: 'bold',

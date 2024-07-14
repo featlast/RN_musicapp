@@ -1,4 +1,4 @@
-import {createStackNavigator, StackNavigationProp} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {DetailsScreen, HomeScreen, ProfileScreen} from '../../presentation';
 import {screenOptions} from './screenOptions';
 
