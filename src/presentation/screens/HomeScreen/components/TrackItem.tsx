@@ -4,8 +4,11 @@ import {Music} from '../../../../core/models/music.model';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import format from 'human-format';
 import {colors} from '../../../../theme/colors';
+import {type NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParams} from '../../../../routes/stack/MyStackNavigationScreens';
 
 const TrackItem = React.memo(({item}: {item: Music}) => {
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
     const seconds = duration % 60;
@@ -16,16 +19,16 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.99}
-      onPress={() => console.log('contaner')}
+      onPress={() => navigation.navigate('Detail', {mbid: item.mbid})}
       style={{overflow: 'hidden'}}>
       <View
         style={{
           justifyContent: 'center',
           backgroundColor: colors.ui.primary,
-          width: '98%',
+          width: '95%',
           height: 130,
-          padding: 10,
-          marginBottom: 10,
+          padding: 16,
+          marginBottom: 8,
           alignSelf: 'center',
           borderRadius: 10,
           shadowColor: '#000F', // Agrega una sombra
@@ -72,7 +75,7 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
             size={26}
             color={colors.ui.quaternary}
             style={{position: 'absolute', right: 15, top: 8}}
-            onPress={() => console.log('press fav')}
+            onPress={() => console.log('object')}
           />
           <View
             style={{

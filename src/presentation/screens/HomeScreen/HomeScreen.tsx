@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useTopTracks} from '../../../hook/useTopTracks';
 import {FlashList, ListRenderItemInfo} from '@shopify/flash-list';
 import LoaderKit from 'react-native-loader-kit';
 import TrackItem from './components/TrackItem';
 import {colors} from '../../../theme/colors';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error} = useTopTracks();
 
   if (isLoading)
@@ -56,11 +56,19 @@ const HomeScreen = () => {
   //   [data],
   // );
 
+  // backgroundColor: colors.ui.disabled,
+
+  const colorList = [
+    {offset: '0%', color: '#231557', opacity: '1'},
+    {offset: '29%', color: '#44107A', opacity: '1'},
+    {offset: '67%', color: '#FF1361', opacity: '1'},
+    {offset: '100%', color: '#FFF800', opacity: '1'},
+  ];
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.ui.white,
+        // backgroundColor: colors.ui.disabled,
       }}>
       <FlashList
         data={allTracks}
