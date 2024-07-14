@@ -9,8 +9,10 @@ export class MusicMapper {
       name: result.name,
       duration: result.duration,
       listeners: result.listeners,
+      mbid:result.mbid,
       url: result.url,
-      artist:result.artist
+      artist:result.artist,
+      image:result.image
     };
   }
 }

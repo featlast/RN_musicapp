@@ -4,7 +4,9 @@ export interface Music {
   url: string;
   duration: string;
   listeners: string;
+  mbid:string;
   artist: Artist
+  image: Image[]
 }
 
 interface Artist {
@@ -12,3 +14,16 @@ interface Artist {
   mbid: string;
   url: string;
 }
+interface Image {
+  "#text": string;
+  size:    Size;
+}
+
+enum Size {
+  Extralarge = "extralarge",
+  Large = "large",
+  Medium = "medium",
+  Small = "small",
+}
+
+
