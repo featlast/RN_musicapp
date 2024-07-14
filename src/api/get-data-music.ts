@@ -1,7 +1,7 @@
 import ApiManager from "./apimanager";
 import { API_KEY } from "@env";
 
-export const getTopTracks = async (page = 1) => {
+export const getTopTracks = async (page: number=1) => {
   const { data } = await ApiManager('', {
     params: {
       method: 'geo.gettoptracks',
