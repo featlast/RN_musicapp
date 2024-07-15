@@ -4,3 +4,10 @@ export const generateId = () => {
   const fecha = Date.now().toString(36)
   return random + fecha
 }
+
+export const formatDuration =(seconds: number): string=> {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+  return `${minutes}:${formattedSeconds}`;
+}

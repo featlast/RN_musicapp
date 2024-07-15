@@ -8,17 +8,11 @@ import {RootStackParams} from '../../../../routes/stack/MyStackNavigationScreens
 import Icon, {Icons} from '../../../components/IconComponent';
 import {addToFavorites, removeFromFavorites} from '../../../../redux/utils/favoriteUtils';
 import {useAppDispatch, useAppSelector} from '../../../../redux/hook/hookRedux';
+import {formatDuration} from '../../../../helpers';
 
 const TrackItem = React.memo(({item}: {item: Music}) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-
-  function formatDuration(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-    return `${minutes}:${formattedSeconds}`;
-  }
 
   const imageUrl = item.image[2]['#text'];
 
@@ -74,8 +68,11 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
             style={{width: 70, height: 70, borderRadius: 20}}
             resizeMode="contain"
           />
-          <View style={{padding: 10}}>
-            <Text style={{fontWeight: 'bold', fontFamily: 'Poppins', color: colors.ui.white}}>
+          <View style={{padding: 10, flex: 0.9}}>
+            <Text
+              style={{fontWeight: 'bold', fontFamily: 'Poppins', color: colors.ui.white}}
+              ellipsizeMode="tail"
+              numberOfLines={2}>
               {item.name}
             </Text>
             <Text style={{fontWeight: 'regular', fontFamily: 'Poppins', color: colors.ui.white}}>

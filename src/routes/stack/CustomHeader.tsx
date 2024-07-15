@@ -29,7 +29,7 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
           paddingLeft: 15,
         }}>
         {route.name !== 'Home' && (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity hitSlop={30} onPress={() => navigation.goBack()}>
             <Icon type={Icons.MaterialIcons} name="arrow-back-ios" />
           </TouchableOpacity>
         )}
@@ -56,8 +56,13 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
           paddingRight: 15,
         }}>
         {route.name !== 'Profile' && (
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <TouchableOpacity hitSlop={30} onPress={() => navigation.navigate('Profile')}>
             <Icon type={Icons.SimpleLineIcons} name="playlist" />
+          </TouchableOpacity>
+        )}
+        {route.name === 'Profile' && (
+          <TouchableOpacity hitSlop={30} onPress={() => navigation.navigate('Home')}>
+            <Icon type={Icons.MaterialIcons} name="home" />
           </TouchableOpacity>
         )}
       </View>

@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppDispatch } from '../store';
 import { addFavorite, Favorite, removeFavorite, setFavorites } from '../feature/favoriteSlice';
+import Toast from 'react-native-toast-message';
 
 export const addToFavorites = async (data: Favorite, dispatch: AppDispatch) => {
   try {
+
     // Primero, despachamos la acción para una actualización inmediata de la UI
     dispatch(addFavorite(data));
 
@@ -11,8 +13,13 @@ export const addToFavorites = async (data: Favorite, dispatch: AppDispatch) => {
     const currentFavorites = await AsyncStorage.getItem('favorites');
     let favorites: Favorite[] = currentFavorites ? JSON.parse(currentFavorites) : [];
     
-    if (favorites.length >= 3) {
-      console.log('Límite de favoritos alcanzado. Elimina alguno para añadir más.');
+    if (favorites.length >=10) {
+      Toast.show({
+        type: 'success',
+        text1: 'Límite de favoritos alcanzado',
+        text2: ' 🚫',
+      });
+      // console.log('Límite de favoritos alcanzado. Elimina alguno para añadir más.');
       dispatch(removeFavorite(data.mbid));
       return false;
     }
@@ -20,11 +27,20 @@ export const addToFavorites = async (data: Favorite, dispatch: AppDispatch) => {
     favorites.push(data);
     
     await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
-    
-    console.log('Favorito añadido con éxito');
+    Toast.show({
+      type: 'success',
+      text1: 'Favorito añadido con éxito',
+      text2: 'Correctamente ✌️',
+    });
+    // console.log('Favorito añadido con éxito');
     return true;
   } catch (error) {
-    console.log('Error añadiendo a favoritos:', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Error Al Eliminar',
+      text2: '⚠️',
+    });
+    // console.log('Error añadiendo a favoritos:', error);
     // Revertimos el estado en caso de error
     dispatch(removeFavorite(data.mbid));
     return false;
@@ -37,26 +53,16 @@ export const getFavorites = async (dispatch: AppDispatch): Promise<void> => {
     const favorites: Favorite[] = favoritesJson ? JSON.parse(favoritesJson) : [];
     dispatch(setFavorites(favorites));
   } catch (error) {
-    console.log('Error obteniendo favoritos:', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Error obteniendo favoritos',
+      text2: '⚠️',
+    });
+    // console.log('Error obteniendo favoritos:', error);
     dispatch(setFavorites([]));
   }
 };
 
-// export const removeFromFavorites = async (mbid: string, dispatch: AppDispatch) => {
-//   try {
-//     dispatch(removeFavorite(mbid));
-//     const currentFavorites = await AsyncStorage.getItem('favorites');
-//     if (currentFavorites) {
-//       let favorites: Favorite[] = JSON.parse(currentFavorites);
-//       favorites = favorites.filter(fav => fav.mbid !== mbid);
-//       await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
-//     }
-    
-//     console.log('Favorito eliminado con éxito', mbid);
-//   } catch (error) {
-//     console.log('Error eliminando de favoritos:', error);
-//   }
-// };
 
 export const removeFromFavorites = async (mbid: string, dispatch: AppDispatch) => {
   try {
@@ -73,12 +79,26 @@ export const removeFromFavorites = async (mbid: string, dispatch: AppDispatch) =
       
       // Dispatch de la acción para actualizar el estado de Redux
       dispatch(removeFavorite(mbid));
-      
-      console.log('Favorito eliminado con éxito', mbid);
+      Toast.show({
+        type: 'success',
+        text1: 'Favorito eliminado con éxito',
+        text2: ' ✌️',
+      });
+      // console.log('Favorito eliminado con éxito', mbid);
     } else {
-      console.log('No se encontraron favoritos');
+      Toast.show({
+        type: 'error',
+        text1: 'No se encontraron favoritos',
+        text2: '⚠️',
+      });
+      // console.log('No se encontraron favoritos');
     }
   } catch (error) {
-    console.error('Error eliminando de favoritos:', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Error eliminando de favoritos',
+      text2: '⚠️',
+    });
+    // console.error('Error eliminando de favoritos:', error);
   }
 };

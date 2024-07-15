@@ -30,9 +30,6 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    // addFavorite: (state, action: PayloadAction<Favorite>) => {
-    //   state.items.push(action.payload);
-    // },
     addFavorite: (state, action: PayloadAction<Favorite>) => {
       if (state.items.length < 10) {
         state.items.push(action.payload);
