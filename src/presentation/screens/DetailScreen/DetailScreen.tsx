@@ -27,7 +27,7 @@ const DetailScreen: React.FC = () => {
 
   return (
     <View style={{flex: 1}}>
-      <Text>{data.name}</Text>
+      <Text style={{color: colors.ui.darkBlue}}>{data.name}</Text>
     </View>
   );
 };

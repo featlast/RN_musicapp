@@ -1,13 +1,16 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Music} from '../../../../core/models/music.model';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import format from 'human-format';
-import {colors} from '../../../../theme/colors';
 import {type NavigationProp, useNavigation} from '@react-navigation/native';
+import {colors} from '../../../../theme/colors';
+import {Music} from '../../../../core/models/music.model';
 import {RootStackParams} from '../../../../routes/stack/MyStackNavigationScreens';
 import Icon, {Icons} from '../../../components/IconComponent';
+import {addToFavorites, removeFromFavorites} from '../../../../redux/utils/favoriteUtils';
+import {useAppDispatch, useAppSelector} from '../../../../redux/hook/hookRedux';
 
 const TrackItem = React.memo(({item}: {item: Music}) => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   function formatDuration(seconds: number): string {
@@ -18,6 +21,21 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
   }
 
   const imageUrl = item.image[2]['#text'];
+
+  const favorites = useAppSelector(state => state.favorites.items);
+  const isFavorite = favorites.some(fav => fav.mbid === item.mbid);
+
+  const handleToggleFavorite = async () => {
+    if (isFavorite) {
+      await removeFromFavorites(item.mbid, dispatch);
+    } else {
+      const added = await addToFavorites(item, dispatch);
+      if (!added) {
+        console.log('No se puede añadir más favoritos. Límite alcanzado.');
+      }
+    }
+  };
+
   return (
     <TouchableOpacity
       activeOpacity={0.99}
@@ -74,9 +92,16 @@ const TrackItem = React.memo(({item}: {item: Music}) => {
             </Text>
           </View>
           <TouchableOpacity
-            onPress={() => console.log('Add Fav')}
-            style={{position: 'absolute', right: 15, top: 8}}>
-            <Icon type={Icons.MaterialIcons} name="favorite-outline" size={20} />
+            disabled={isFavorite}
+            onPress={handleToggleFavorite}
+            style={{position: 'absolute', right: 15, top: 8}}
+            hitSlop={30}>
+            <Icon
+              type={Icons.MaterialIcons}
+              name={isFavorite ? 'favorite' : 'favorite-outline'}
+              size={20}
+              color={isFavorite ? colors.ui.white : colors.ui.fucsia}
+            />
           </TouchableOpacity>
 
           <View

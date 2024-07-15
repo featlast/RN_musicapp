@@ -9,7 +9,18 @@ import Loader from '../../components/Loader';
 const HomeScreen: React.FC = () => {
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error} = useTopTracks();
 
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.ui.white,
+        }}>
+        <Loader />
+      </View>
+    );
   if (error) return <Text>Error: {error.message}</Text>;
 
   const loadMore = () => {

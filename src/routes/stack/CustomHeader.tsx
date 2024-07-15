@@ -16,9 +16,11 @@ const CustomHeader: React.FC<{title: string}> = ({title}) => {
         flexDirection: 'row',
         alignItems: 'center',
         height: 60,
-        backgroundColor: colors.ui.disabled,
+        backgroundColor: colors.ui.purple,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
+        width: '99%',
+        alignSelf: 'center',
       }}>
       <View
         style={{
